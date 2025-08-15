@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Controle da IA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="panel">
+            <header>
+                <h1>PAINEL DE CONTROLE</h1>
+            </header>
+
+            <nav class="panel-nav">
+                <button class="tab-button active" data-tab="geral">Geral</button>
+                <button class="tab-button" data-tab="conhecimento">Conhecimento</button>
+                <button class="tab-button" data-tab="inventario">Inventário</button>
+                <button class="tab-button" data-tab="acoes">Ações</button>
+                <button class="tab-button" data-tab="simulacoes">Simulações</button>
+            </nav>
+
+            <div class="panel-content">
+                <div id="tab-geral" class="tab-panel active">
+                    <section>
+                        <h2>Atributos (IA Atual)</h2>
+                        <div class="control-group"><label for="luck">Sorte</label><input type="range" id="luck" min="0" max="100" value="50"><span id="luck-value">50</span></div>
+                        <div class="control-group"><label for="irritability">Irritabilidade</label><input type="range" id="irritability" min="0" max="100" value="30"><span id="irritability-value">30</span></div>
+                        <div class="control-group"><label for="obedience">Obediência</label><input type="range" id="obedience" min="0" max="100" value="70"><span id="obedience-value">70</span></div>
+                        <div class="control-group"><label for="laziness">Preguiça</label><input type="range" id="laziness" min="0" max="100" value="20"><span id="laziness-value">20</span></div>
+                    </section>
+                    <section>
+                        <h2>Necessidades (IA Atual)</h2>
+                        <div class="control-group"><label for="hunger">Fome</label><input type="range" id="hunger" min="0" max="100" value="80"><span id="hunger-value">80</span></div>
+                        <div class="control-group"><label for="sleep">Sono</label><input type="range" id="sleep" min="0" max="100" value="80"><span id="sleep-value">80</span></div>
+                        <div class="control-group"><label for="fun">Diversão</label><input type="range" id="fun" min="0" max="100" value="60"><span id="fun-value">60</span></div>
+                    </section>
+                    <section>
+                        <h2>Sentimento Atual</h2>
+                        <div class="feeling-controls"><select id="current-feeling"><option value="alegre">Alegre</option><option value="neutro" selected>Neutro</option><option value="triste">Triste</option><option value="raiva">Com Raiva</option></select><div class="knowledge-toggle"><label class="switch"><input type="checkbox" id="lock-feeling-toggle"><span class="slider round"></span></label><span>Travar</span></div></div>
+                    </section>
+                </div>
+                <div id="tab-conhecimento" class="tab-panel">
+                    <section><h2>Habilidades</h2><div class="knowledge-toggle"><label class="switch"><input type="checkbox" id="knowledge-cozinhar"><span class="slider round"></span></label><span>Cozinhar</span></div><div class="knowledge-toggle"><label class="switch"><input type="checkbox" id="knowledge-plantar"><span class="slider round"></span></label><span>Plantar</span></div><div class="knowledge-toggle"><label class="switch"><input type="checkbox" id="knowledge-dançar" checked><span class="slider round"></span></label><span>Dançar</span></div><div class="knowledge-toggle"><label class="switch"><input type="checkbox" id="knowledge-consertar"><span class="slider round"></span></label><span>Consertar</span></div></section>
+                    <section><h2>Livro de Receitas</h2><div id="recipe-list-container" class="locked"><ul id="recipe-list"></ul></div></section>
+                </div>
+                <div id="tab-inventario" class="tab-panel">
+                    <section id="items-panel"><h2>Itens da Casa</h2><div class="items-grid"><div id="item-tv" class="item-container"><img src="sprites/tv-consertado.png" alt="Televisão"><p>Televisão</p></div><div id="item-radio" class="item-container"><img src="sprites/radio-consertado.png" alt="Rádio"><p>Rádio</p></div><div id="item-abajur" class="item-container"><img src="sprites/abajur-consertado.png" alt="Abajur"><p>Abajur</p></div><div id="item-torradeira" class="item-container"><img src="sprites/torradeira-consertado.png" alt="Torradeira"><p>Torradeira</p></div></div></section>
+                    <section id="fridge-panel"><h2>Geladeira</h2><div class="add-ingredient-form"><input type="text" id="ingredient-input" placeholder="Adicionar ingrediente..."><button id="add-ingredient-btn">+</button></div><ul id="fridge-contents"></ul></section>
+                </div>
+                <div id="tab-acoes" class="tab-panel">
+                    <section><h2>Forçar Ação</h2><div class="action-buttons"><button data-action="procurar o que cozinhar">Cozinhar</button><button data-action="procurar algo para consertar">Consertar</button><button data-action="plantar">Plantar</button><button data-action="dançar">Dançar</button></div></section>
+                </div>
+                <div id="tab-simulacoes" class="tab-panel">
+                    <section id="sandbox-controls">
+                        <h3>Configurações do Sandbox</h3>
+                        <p>Ajuste os valores iniciais para a simulação. Eles não afetam sua IA em tempo real.</p>
+                        <div class="sandbox-group">
+                            <h4>Atributos Iniciais</h4>
+                            <div class="control-group"><label for="sandbox-luck">Sorte</label><input type="range" id="sandbox-luck" min="0" max="100" value="50"><span id="sandbox-luck-value">50</span></div>
+                            <div class="control-group"><label for="sandbox-irritability">Irritabilidade</label><input type="range" id="sandbox-irritability" min="0" max="100" value="30"><span id="sandbox-irritability-value">30</span></div>
+                            <div class="control-group"><label for="sandbox-obedience">Obediência</label><input type="range" id="sandbox-obedience" min="0" max="100" value="70"><span id="sandbox-obedience-value">70</span></div>
+                            <div class="control-group"><label for="sandbox-laziness">Preguiça</label><input type="range" id="sandbox-laziness" min="0" max="100" value="20"><span id="sandbox-laziness-value">20</span></div>
+                        </div>
+                        <div class="sandbox-group">
+                            <h4>Necessidades Iniciais</h4>
+                            <div class="control-group"><label for="sandbox-hunger">Fome</label><input type="range" id="sandbox-hunger" min="0" max="100" value="80"><span id="sandbox-hunger-value">80</span></div>
+                            <div class="control-group"><label for="sandbox-sleep">Sono</label><input type="range" id="sandbox-sleep" min="0" max="100" value="80"><span id="sandbox-sleep-value">80</span></div>
+                            <div class="control-group"><label for="sandbox-fun">Diversão</label><input type="range" id="sandbox-fun" min="0" max="100" value="60"><span id="sandbox-fun-value">60</span></div>
+                        </div>
+                    </section>
+                    <section>
+                        <h3>Rodar Simulação Rápida</h3>
+                        <div class="simulation-controls">
+                            <button data-runs="10">10 Ciclos</button>
+                            <button data-runs="100">100 Ciclos</button>
+                            <button data-runs="1000">1.000 Ciclos</button>
+                            <button data-runs="10000">10.000 Ciclos</button>
+                        </div>
+                    </section>
+                    <section id="simulation-report">
+                        <p class="placeholder">O relatório da simulação aparecerá aqui.</p>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <div class="simulation-screen">
+            <div class="status-display"><div id="ia-avatar"></div><h2 id="ia-status-title">INICIALIZANDO...</h2><p id="ia-status-text">Aguardando primeiro ciclo de pensamento.</p><div class="progress-bar-container"><div id="action-progress-bar"></div></div></div>
+            <div class="log-window"><h3>Log de Atividades</h3><ul id="log-list"><li>Sistema IA iniciado.</li></ul></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
