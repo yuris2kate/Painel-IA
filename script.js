@@ -130,7 +130,7 @@
 
     // ===================================================================
     // FUNÇÃO CORRIGIDA
-    // Corrigido o caminho da pasta de 'sprite/' para 'sprites/'
+    // Corrigido o caminho da pasta de 'sprite/' para 'sprite/'
     // e os nomes dos arquivos de 'on'/'off' para 'consertado'/'quebrado'.
     // ===================================================================
     _updateItemsUI() { 
@@ -139,7 +139,7 @@
             if (itemElement) { 
                 const img = itemElement.querySelector('img'); 
                 itemElement.classList.toggle('broken', item.isBroken); 
-                img.src = `sprites/${item.id}-${item.isBroken ? 'off' : 'on'}.png`; 
+                img.src = `sprite/${item.id}-${item.isBroken ? 'off' : 'on'}.png`; 
             } 
         }); 
     },
