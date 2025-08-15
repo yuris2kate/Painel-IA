@@ -14,7 +14,7 @@
       feelings: { current: "neutro", manualOverride: false },
       isBusy: false,
       fridge: ["ovo", "queijo", "pão", "tomate"],
-      items: [ { id: 'tv', name: 'Televisão', isBroken: false }, { id: 'radio', name: 'Rádio', isBroken: false }, { id: 'abajur', name: 'Abajur', isBroken: false }, { id: 'torradeira', name: 'Torradeira', isBroken: false }, ]
+      items: [ { id: 'quadro', name: 'Quadro', isBroken: false }, { id: 'banco', name: 'Banco', isBroken: false }, { id: 'Cama', name: 'Cama', isBroken: false }, { id: 'caixa', name: 'Caixa', isBroken: false }, ]
     },
 
     sandboxState: {},
@@ -139,7 +139,7 @@
       this._updateItemsUI();
     },
 
-    _updateItemsUI() { this.state.items.forEach(item => { const itemElement = document.getElementById(`item-${item.id}`); if (itemElement) { const img = itemElement.querySelector('img'); itemElement.classList.toggle('broken', item.isBroken); img.src = `sprites/${item.id}-${item.isBroken ? 'quebrado' : 'consertado'}.png`; } }); },
+    _updateItemsUI() { this.state.items.forEach(item => { const itemElement = document.getElementById(`item-${item.id}`); if (itemElement) { const img = itemElement.querySelector('img'); itemElement.classList.toggle('broken', item.isBroken); img.src = `sprite/${item.id}-${item.isBroken ? 'off' : 'on'}.png`; } }); },
     _updateRecipeBookUI() { if(this.elements.recipeListContainer) { this.elements.recipeListContainer.classList.toggle("locked", !this.state.knowledge.cozinhar); this.elements.recipeList.innerHTML = Object.keys(CULINARY_BOOK).map((recipeName) => { const isKnown = this.state.knowledge.culinary.includes(recipeName); const ingredients = CULINARY_BOOK[recipeName].ingredients.join(", "); const checkedAttribute = isKnown ? 'checked' : ''; return ` <li class="${isKnown ? "known-recipe" : "unknown-recipe"}"> <div class="recipe-info"> <strong>${recipeName}</strong> <small>(${ingredients})</small> </div> <div class="knowledge-toggle"> <label class="switch"> <input type="checkbox" data-recipe="${recipeName}" ${checkedAttribute}> <span class="slider round"></span> </label> </div> </li> `; }).join(""); } },
     _updateFridgeUI() { if (this.elements.fridgeContents) { this.elements.fridgeContents.innerHTML = this.state.fridge.map((ing) => `<li>${ing}</li>`).join(""); } },
     _decayNeeds(state) { if (state.isBusy) return; for (const need in this.config.NEEDS_DECAY_RATE) { state.needs[need] = Math.max(0, state.needs[need] - this.config.NEEDS_DECAY_RATE[need]); } if (state === this.state) this._updateUI(); },
