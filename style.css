@@ -1,0 +1,558 @@
+/* --- Variáveis Globais e Reset --- */
+:root {
+    --bg-color: #1a1a2e;
+    --panel-bg: #16213e;
+    --display-bg: #0f3460;
+    --primary-color: #e94560;
+    --accent-color: #53a8b6;
+    --text-color: #dcdcdc;
+    --font-family: 'Orbitron', sans-serif;
+    --border-radius: 8px;
+    --glow-shadow: 0 0 5px var(--accent-color), 0 0 10px var(--accent-color);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* --- Layout Principal --- */
+.container {
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
+    height: 90vh;
+    background-color: var(--panel-bg);
+    border: 2px solid var(--accent-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--glow-shadow);
+    overflow: hidden;
+}
+
+.panel {
+    width: 40%;
+    padding: 20px;
+    overflow-y: auto;
+    border-right: 2px solid var(--accent-color);
+    background: rgba(0,0,0,0.2);
+}
+
+.simulation-screen {
+    width: 60%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* --- Estilo da Barra de Rolagem --- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--display-bg);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+
+/* --- Seções do Painel --- */
+.panel section {
+    margin-bottom: 20px;
+    background: rgba(15, 52, 96, 0.3);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--display-bg);
+}
+
+.panel header h1 {
+    text-align: center;
+    color: var(--primary-color);
+    text-shadow: 0 0 5px var(--primary-color);
+    margin-bottom: 25px;
+    animation: pulse 1.8s infinite;
+}
+
+.panel h2 {
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--accent-color);
+    padding-bottom: 5px;
+}
+
+/* --- Controles e Inputs --- */
+.control-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.control-group label {
+    flex-basis: 120px;
+}
+.control-group input[type="range"] {
+    flex-grow: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
+    background: var(--display-bg);
+    border-radius: 5px;
+    outline: none;
+    transition: box-shadow 0.2s;
+}
+.control-group input[type="range"]:hover {
+    box-shadow: 0 0 5px var(--primary-color);
+}
+.control-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    cursor: pointer;
+    border-radius: 50%;
+    border: 2px solid var(--bg-color);
+}
+.control-group span {
+    margin-left: 15px;
+    font-weight: bold;
+    color: var(--primary-color);
+    width: 30px;
+}
+
+/* Toggle Switch */
+.knowledge-toggle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.knowledge-toggle:last-child {
+    margin-bottom: 0;
+}
+.knowledge-toggle span {
+    margin-left: 10px;
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--display-bg);
+    transition: .4s;
+}
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px; width: 26px;
+    left: 4px; bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+input:checked + .slider { background-color: var(--primary-color); }
+input:focus + .slider { box-shadow: 0 0 1px var(--primary-color); }
+input:checked + .slider:before { transform: translateX(26px); }
+.slider.round { border-radius: 34px; }
+.slider.round:before { border-radius: 50%; }
+
+/* Sentimentos e Ações */
+.feeling-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.feeling-controls select {
+    flex-grow: 1;
+}
+#current-feeling, .action-buttons button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--display-bg);
+    color: var(--text-color);
+    border: 1px solid var(--accent-color);
+    border-radius: var(--border-radius);
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+.action-buttons button:hover, #current-feeling:hover {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+/* --- Livro de Receitas e Geladeira --- */
+#recipe-list-container.locked {
+    opacity: 0.5;
+    pointer-events: none;
+    filter: grayscale(80%);
+}
+#recipe-list, #fridge-contents {
+    list-style: none;
+    padding: 0;
+    max-height: 150px;
+    overflow-y: auto;
+}
+#recipe-list li {
+    background: rgba(0,0,0,0.2);
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: var(--border-radius);
+}
+#recipe-list li strong { color: var(--primary-color); }
+#recipe-list li.known-recipe { border-left: 3px solid var(--primary-color); }
+#recipe-list li.unknown-recipe { opacity: 0.6; border-left: 3px solid var(--display-bg); }
+
+.add-ingredient-form { display: flex; margin-bottom: 10px; }
+#ingredient-input {
+    flex-grow: 1;
+    background: var(--bg-color);
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    padding: 8px;
+    border-radius: var(--border-radius) 0 0 var(--border-radius);
+    font-family: var(--font-family);
+}
+#add-ingredient-btn {
+    width: 40px;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    color: var(--bg-color);
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    transition: background-color 0.3s;
+}
+#add-ingredient-btn:hover { background-color: #ff6b81; }
+
+#fridge-contents { display: flex; flex-wrap: wrap; gap: 8px; }
+#fridge-contents li {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+/* --- Tela de Simulação --- */
+.status-display {
+    text-align: center;
+    background: rgba(0,0,0,0.3);
+    padding: 40px 20px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--accent-color);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#ia-avatar {
+    width: 80px; height: 80px;
+    background-color: var(--accent-color);
+    border-radius: 50%;
+    margin-bottom: 20px;
+    box-shadow: var(--glow-shadow);
+    animation: breathe 4s infinite ease-in-out;
+}
+#ia-status-title {
+    font-size: 2em;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    animation: flicker 3s infinite;
+}
+#ia-status-text { font-size: 1.2em; min-height: 50px; }
+
+.progress-bar-container {
+    width: 80%;
+    height: 20px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--accent-color);
+    border-radius: 10px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+#action-progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    transition: width 0.5s linear;
+}
+
+.log-window {
+    height: 200px;
+    margin-top: 20px;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--accent-color);
+    border-radius: var(--border-radius);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.log-window h3 { margin-bottom: 10px; }
+#log-list {
+    list-style: none;
+    height: 100%;
+    overflow-y: auto;
+    font-size: 0.9em;
+    padding-right: 10px;
+}
+#log-list li {
+    padding: 2px 0;
+    border-bottom: 1px dotted rgba(83, 168, 182, 0.3);
+}
+
+/* --- Animações --- */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); text-shadow: 0 0 5px var(--primary-color); }
+    50% { transform: scale(1.02); text-shadow: 0 0 10px var(--primary-color); }
+}
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+@keyframes breathe {
+    0%, 100% { transform: scale(1); box-shadow: var(--glow-shadow); }
+    50% { transform: scale(1.1); box-shadow: 0 0 15px var(--accent-color), 0 0 25px var(--accent-color); }
+}
+
+/* --- Estilos para a lista de receitas interativa --- */
+#recipe-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px; /* Aumenta o espaçamento interno */
+}
+
+.recipe-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.recipe-info small {
+    opacity: 0.7;
+    font-size: 0.8em;
+}
+
+#recipe-list .knowledge-toggle {
+    margin-bottom: 0; /* Remove a margem extra dos toggles dentro da lista */
+}
+
+/* --- Estilos para o Painel de Itens --- */
+.items-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.item-container {
+    background: rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--display-bg);
+    border-radius: var(--border-radius);
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.item-container:hover {
+    transform: scale(1.05);
+    border-color: var(--accent-color);
+}
+
+.item-container img {
+    width: 64px; /* Tamanho fixo para os sprites */
+    height: 64px;
+    object-fit: contain;
+    margin-bottom: 5px;
+}
+
+.item-container p {
+    font-size: 0.9em;
+}
+
+.item-container.broken {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px var(--primary-color);
+}
+
+.item-container.broken img {
+    filter: grayscale(50%) brightness(0.8);
+}
+
+/* --- Estilos para a Navegação por Abas --- */
+.panel-nav {
+    display: flex;
+    margin-bottom: 20px;
+    border-radius: var(--border-radius);
+    background-color: var(--display-bg);
+    overflow: hidden;
+}
+
+.tab-button {
+    flex-grow: 1;
+    padding: 12px 10px;
+    font-family: var(--font-family);
+    font-size: 0.9em;
+    color: var(--text-color);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tab-button.active {
+    color: var(--primary-color);
+    background-color: rgba(0, 0, 0, 0.2);
+    border-bottom: 3px solid var(--primary-color);
+}
+
+.tab-panel {
+    display: none;
+    animation: fadeIn 0.4s ease;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+/* Animação de fade-in para as abas */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Estilos para a Aba de Simulação --- */
+.simulation-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.simulation-controls button {
+    padding: 12px;
+    font-family: var(--font-family);
+    background-color: var(--display-bg);
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.simulation-controls button:hover {
+    background-color: var(--accent-color);
+    color: var(--bg-color);
+    box-shadow: var(--glow-shadow);
+}
+
+.simulation-controls button:disabled {
+    background-color: #333;
+    color: #777;
+    cursor: not-allowed;
+    border-color: #555;
+}
+
+
+#simulation-report .placeholder {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+}
+
+#simulation-report h3 {
+    color: var(--primary-color);
+    margin-top: 15px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--primary-color);
+    padding-bottom: 5px;
+}
+
+#simulation-report ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#simulation-report li {
+    background-color: rgba(0,0,0,0.2);
+    padding: 8px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    border-left: 3px solid var(--accent-color);
+}
+#simulation-report li strong {
+    color: var(--text-color);
+}
+#simulation-report li span {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* --- Estilos para a Tabela de Evolução no Relatório --- */
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.report-table th, .report-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid var(--display-bg);
+}
+
+.report-table th {
+    background-color: var(--display-bg);
+    color: var(--accent-color);
+    font-size: 0.9em;
+}
+
+.report-table tbody tr:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.report-table tbody tr:hover {
+    background-color: var(--display-bg);
+    color: var(--primary-color);
+}
