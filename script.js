@@ -14,7 +14,7 @@
       feelings: { current: "neutro", manualOverride: false },
       isBusy: false,
       fridge: ["ovo", "queijo", "pão", "tomate"],
-      items: [ { id: 'tv', name: 'Televisão', isBroken: false }, { id: 'radio', name: 'Rádio', isBroken: false }, { id: 'abajur', name: 'Abajur', isBroken: false }, { id: 'torradeira', name: 'Torradeira', isBroken: false }, ]
+      items: [ { id: 'banco', name: 'Banco', isBroken: false }, { id: 'cama', name: 'Cama', isBroken: false }, { id: 'caixa', name: 'Caixa', isBroken: false }, { id: 'quadro', name: 'Quadro', isBroken: false }, ]
     },
 
     sandboxState: {},
@@ -139,7 +139,7 @@
             if (itemElement) { 
                 const img = itemElement.querySelector('img'); 
                 itemElement.classList.toggle('broken', item.isBroken); 
-                img.src = `sprites/${item.id}-${item.isBroken ? 'quebrado' : 'consertado'}.png`; 
+                img.src = `sprites/${item.id}-${item.isBroken ? 'off' : 'on'}.png`; 
             } 
         }); 
     },
