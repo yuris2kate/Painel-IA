@@ -6,7 +6,7 @@
     <title>Painel de Controle da IA</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -53,7 +53,15 @@
                     <section id="fridge-panel"><h2>Geladeira</h2><div class="add-ingredient-form"><input type="text" id="ingredient-input" placeholder="Adicionar ingrediente..."><button id="add-ingredient-btn">+</button></div><ul id="fridge-contents"></ul></section>
                 </div>
                 <div id="tab-acoes" class="tab-panel">
-                    <section><h2>Forçar Ação</h2><div class="action-buttons"><button data-action="procurar o que cozinhar">Cozinhar</button><button data-action="procurar algo para consertar">Consertar</button><button data-action="plantar">Plantar</button><button data-action="dançar">Dançar</button></div></section>
+                    <section>
+                        <h2>Forçar Ação</h2>
+                        <div class="action-buttons" id="force-action-buttons">
+                            <button data-action="procurar o que cozinhar">Cozinhar</button>
+                            <button data-action="procurar algo para consertar">Consertar</button>
+                            <button data-action="plantar">Plantar</button>
+                            <button data-action="dançar">Dançar</button>
+                        </div>
+                    </section>
                 </div>
                 <div id="tab-simulacoes" class="tab-panel">
                     <section id="sandbox-controls">
